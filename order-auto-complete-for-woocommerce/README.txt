@@ -1,11 +1,10 @@
 === Order auto complete for WooCommerce ===
 Contributors: kardi420
-Donate link: https://www.buymeacoffee.com/ikardi04d
 Tags: order auto complete,woocommerce,wordpress,auto complete,WooCommerce order auto complete, add to cart button option,out of stock button change option,add to cart,button text
 Requires at least: 4.8
-Tested up to: 6.4
+Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv3 or later License
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -44,7 +43,10 @@ It is a simple woocommerce addon or extension.If Enable the plugin, then your al
 *Out of stock button text change option added
 = 1.2.1 =
 * Updated: security improved
+= 1.2.2 =
+* Updated: Latest WordPress compatable
+* Updated: Latest WooCommerce compatable
 == Upgrade Notice ==
 
-Last updated at 12/11/2023
+Last updated at 22/04/2025
 

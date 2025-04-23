@@ -3,7 +3,7 @@
 Plugin Name: Order auto complete for WooCommerce
 Plugin URI : webtoptemplate.com
 Description:  WooCommerce Order will automatically complete
-Version:1.2.1
+Version:1.2.2
 Author: kardi
 Author URI : https://github.com/ikardi420
 License : GPL v or later
@@ -90,9 +90,9 @@ function woodecor_section_developers_callback($args)
 {
     if (!is_plugin_active('woocommerce/woocommerce.php')) { ?>
         <div id="message" class="error">
-            <p>Woo Decor Add To Cart requires <a href="https://wordpress.org/plugins/woocommerce/" target="_blank">WooCommerce</a> to be activated in order to work. Please install and activate <a href="<?php echo admin_url('/plugin-install.php?tab=search&amp;type=term&amp;s=WooCommerce'); ?>" target="">WooCommerce</a> first.</p>
+            <p>Woocommerce Order Autocomplete plugin requires <a href="https://wordpress.org/plugins/woocommerce/" target="_blank">WooCommerce</a> to be activated in order to work. Please install and activate <a href="<?php echo admin_url('/plugin-install.php?tab=search&amp;type=term&amp;s=WooCommerce'); ?>" target="">WooCommerce</a> first.</p>
         </div>
-    <?php deactivate_plugins('/woo-decor/index.php');
+    <?php deactivate_plugins('/order-auto-complete-for-woocommerce/index.php');
     }
 }
 
@@ -116,7 +116,7 @@ function woodecor_field_cart_cb($args)
     <input id='woodecor_field_cart' placeholder="Add To Cart" name='woodecor_options1' type='text' value="<?php echo esc_attr(sanitize_text_field($options)); ?>" />
     <p class="description">
     <div class="tooltip"><?php esc_html_e('here set your text.', 'wtt-woo-auto-complete'); ?>
-        <span class="tooltiptext">Set Add to cart Button Text</span>
+        <span class="tooltiptext"><?php esc_html_e('Set Add to cart Button Text', 'wtt-woo-auto-complete'); ?></span>
     </div>
 
     </p>
@@ -133,7 +133,7 @@ function woodecor_field_readmore_cb($args)
     <input id='woodecor_field_readmore' placeholder="Read More" name='woodecor_options2' type='text' value="<?php echo esc_attr(sanitize_text_field($options)); ?>" />
     <p class="description">
     <div class="tooltip"><?php esc_html_e('here set your text.', 'wtt-woo-auto-complete'); ?>
-        <span class="tooltiptext">Set Out of Stock Button Text</span>
+        <span class="tooltiptext"><?php esc_html_e('Set Out of Stock Button Text', 'wtt-woo-auto-complete');?></span>
     </div>
 
     </p>
@@ -157,6 +157,15 @@ function woodecor_options_page()
         'manage_options',
         'woodecor',
         'woodecor_options_page_html'
+    );
+    // Add the Upgrade to Pro submenu with custom CSS
+    add_submenu_page(
+        'woodecor', // Parent slug
+        'Upgrade to Pro', // Page title
+        '<a href="https://wppoet.com/woocommerce-order-auto-notification/" target="_blank" style="background:orange;color:white;"> <span class="woodecor-pro-link">Upgrade to Pro</span></a>', // Menu title with HTML
+        'manage_options', // Capability
+        'woodecor-pro', // Menu slug
+        'woodecor_pro_page' // Callback function
     );
 }
 
@@ -222,3 +231,64 @@ function woodecor_enqueue_front_scripts()
 add_action('wp_enqueue_scripts', 'woodecor_enqueue_front_scripts');
 
 require_once('function.php');
+
+// Add action to show admin notice after login
+add_action('admin_init', 'woodecor_check_show_admin_notice');
+
+
+/**
+ * Check if we should show the admin notice
+ */
+function woodecor_check_show_admin_notice() {
+    // Get current user
+    $user_id = get_current_user_id();
+    
+    // Check if user just logged in
+    if (get_user_meta($user_id, 'woodecor_login_notice_shown', true) !== date('Y-m-d')) {
+        // Set flag to show notice
+        update_user_meta($user_id, 'woodecor_show_notice', true);
+        // Update last shown date
+        update_user_meta($user_id, 'woodecor_login_notice_shown', date('Y-m-d'));
+    }
+}
+
+
+
+// Handle AJAX dismiss
+add_action('wp_ajax_woodecor_dismiss_notice', 'woodecor_dismiss_notice_handler');
+
+/**
+ * Handle the notice dismissal
+ */
+function woodecor_dismiss_notice_handler() {
+    // Verify nonce
+    check_ajax_referer('woodecor_dismiss_notice', 'nonce');
+    
+    // Get current user
+    $user_id = get_current_user_id();
+    
+    // Update user meta to indicate notice was dismissed
+    update_user_meta($user_id, 'woodecor_show_notice', false);
+    
+    wp_die();
+}
+
+// Add action to show admin notice
+add_action('admin_notices', 'woodecor_show_plugin_notice');
+
+function woodecor_show_plugin_notice() {
+    // Get current screen
+    $screen = get_current_screen();
+    
+    // Only show on dashboard
+    if ($screen->id === 'dashboard') {
+        ?>
+        <div class="notice notice-info is-dismissible">
+            <p>
+                📢 <?php esc_html_e('WooCommerce Order Auto Notification plugin now available! ', 'wtt-woo-auto-complete'); ?>
+                <a href="https://wppoet.com/woocommerce-order-auto-notification/" target="_blank">Try it now</a>
+            </p>
+        </div>
+        <?php
+    }
+}
