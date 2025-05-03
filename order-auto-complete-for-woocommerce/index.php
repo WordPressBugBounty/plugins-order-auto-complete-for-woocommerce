@@ -1,16 +1,16 @@
 <?php
 /*
 Plugin Name: Order auto complete for WooCommerce
-Plugin URI : webtoptemplate.com
+Plugin URI : https://wppoet.com/
 Description:  WooCommerce Order will automatically complete
-Version:1.2.2
+Version:1.2.3
 Author: kardi
 Author URI : https://github.com/ikardi420
 License : GPL v or later
 Text Domain: wtt-woo-auto-complete
 Domain Path : /languages/
 WC requires at least: 4.2.0
-WC tested up to: 8.2.0
+WC tested up to: 9.8.1
 */
 
 if (!defined('ABSPATH')) {
@@ -40,7 +40,7 @@ function wttwoodecor_settings_init()
     // Register a new setting for "woodecor" page.
     register_setting('woodecor', 'woodecor_options1');
     register_setting('woodecor', 'woodecor_options2');
-
+    register_setting('woodecor', 'woodecor_hidenotice');
 
     // Register a new section in the "woodecor" page.
     add_settings_section(
@@ -63,6 +63,13 @@ function wttwoodecor_settings_init()
         'woodecor_field_readmore',
         __('Out of Stock Button Text', 'wtt-woo-auto-complete'),
         'woodecor_field_readmore_cb',
+        'woodecor',
+        'woodecor_section_developers'
+    );
+    add_settings_field(
+        'woodecor_field_hidenotice',
+        __('Hide Admin Notice', 'wtt-woo-auto-complete'),
+        'woodecor_field_hidenotice_cb',
         'woodecor',
         'woodecor_section_developers'
     );
@@ -142,6 +149,26 @@ function woodecor_field_readmore_cb($args)
 
 
 <?php
+}
+function woodecor_field_hidenotice_cb($args)
+{
+    // Get the value of the setting we've registered with register_setting()
+    $options = get_option('woodecor_hidenotice');
+
+ 
+
+    // Get the value for the text field and checkbox
+    $hide_notice = isset($options) ? (bool)$options : false;
+    ?>
+
+
+    <label for="woodecor_field_hide_notice">
+        <input type="checkbox" id="woodecor_field_hide_notice" name="woodecor_hidenotice" value="1" <?php checked( $hide_notice, true ); ?> />
+        <?php esc_html_e('Hide the admin notice', 'wtt-woo-auto-complete'); ?>
+    </label>
+    <p class="description"><?php esc_html_e('Check to hide the WooCommerce Auto Notification admin notice.', 'wtt-woo-auto-complete'); ?></p>
+
+    <?php
 }
 
 /**
@@ -236,6 +263,7 @@ require_once('function.php');
 add_action('admin_init', 'woodecor_check_show_admin_notice');
 
 
+
 /**
  * Check if we should show the admin notice
  */
@@ -277,6 +305,10 @@ function woodecor_dismiss_notice_handler() {
 add_action('admin_notices', 'woodecor_show_plugin_notice');
 
 function woodecor_show_plugin_notice() {
+    $options = get_option('woodecor_hidenotice');
+    if ( isset($options) && $options ) {
+        return; // Do not show the notice
+    }
     // Get current screen
     $screen = get_current_screen();
     
