@@ -3,14 +3,14 @@
 Plugin Name: Order auto complete for WooCommerce
 Plugin URI : https://wppoet.com/
 Description:  WooCommerce Order will automatically complete
-Version:1.2.4
+Version:1.2.3
 Author: kardi
 Author URI : https://github.com/ikardi420
 License : GPL v or later
 Text Domain: wtt-woo-auto-complete
 Domain Path : /languages/
 WC requires at least: 4.2.0
-WC tested up to: 10.4.3
+WC tested up to: 9.8.1
 */
 
 if (!defined('ABSPATH')) {

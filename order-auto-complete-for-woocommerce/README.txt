@@ -2,9 +2,9 @@
 Contributors: kardi420
 Tags: order auto complete,woocommerce,wordpress,auto complete,WooCommerce order auto complete, add to cart button option,out of stock button change option,add to cart,button text,woocommerce,tutorlms,woocommerce variation
 Requires at least: 4.8
-Tested up to: 6.8.1
+Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 License: GPLv3 or later License
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
