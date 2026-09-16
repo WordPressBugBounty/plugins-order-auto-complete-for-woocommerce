@@ -2,9 +2,9 @@
 Contributors: kardi420
 Tags: order auto complete,woocommerce,wordpress,auto complete,WooCommerce order auto complete, add to cart button option,out of stock button change option,add to cart,button text,woocommerce,tutorlms,woocommerce variation
 Requires at least: 4.8
-Tested up to: 6.9
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.2.4
+Stable tag: 1.2.5
 License: GPLv3 or later License
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -54,6 +54,12 @@ Woocommerce variation swatches plugin converts the product variation select fiel
 02. The option page 
 == Changelog ==
 
+= 1.2.5 =
+
+* Added order communication settings
+* Added notification
+* Order status seetings on admin
+
 = 1.0.0 =
 * Initial release at: 5/02/2022
 = 1.2.0 =
@@ -68,8 +74,4 @@ Woocommerce variation swatches plugin converts the product variation select fiel
 = 1.2.3 =
 
 * Option: Hide Notice option on dashboard added.
-
-== Upgrade Notice ==
-
-Last updated at 03/05/2025
 

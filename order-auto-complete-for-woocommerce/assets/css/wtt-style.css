@@ -24,3 +24,41 @@
 .tooltip:hover .tooltiptext {
     visibility: visible;
 }
+
+/* Modern admin page styling, scoped to this plugin's own pages. */
+.woodecor-admin-wrap h1 {
+    margin-bottom: 4px;
+}
+
+.woodecor-admin-wrap .description {
+    color: #646970;
+}
+
+.woodecor-nav-tab-wrapper {
+    margin-bottom: 0;
+}
+
+.woodecor-tab-panel {
+    background: #fff;
+    border: 1px solid #e2e4e7;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    padding: 8px 20px 4px;
+    margin-bottom: 24px;
+}
+
+.woodecor-settings-form table.form-table {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.woodecor-settings-form input[type="text"],
+.woodecor-settings-form input[type="number"],
+.woodecor-settings-form textarea {
+    border-radius: 6px;
+}
+
+.woodecor-settings-form .submit {
+    margin-top: 8px;
+}
